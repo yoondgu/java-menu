@@ -14,6 +14,7 @@ public class MenuView {
     public static final String MESSAGE_INFORM_COMPLETE = "추천을 완료했습니다.";
 
     public static final String FORMAT_INPUT_DISLIKE_MENU = "%s(이)가 못 먹는 메뉴를 입력해 주세요." + System.lineSeparator();
+    public static final String FORMAT_INFORM_ERROR = "[ERROR] %s" + System.lineSeparator();
 //[ 구분 | 월요일 | 화요일 | 수요일 | 목요일 | 금요일 ]
 //            [ 카테고리 | 한식 | 한식 | 일식 | 중식 | 아시안 ]
 //            [ 토미 | 쌈밥 | 김치찌개 | 미소시루 | 짜장면 | 팟타이 ]
@@ -48,5 +49,9 @@ public class MenuView {
         System.out.println(FormatMaker.makeMenuResultsDisplay(dailyCategories, coachMenus));
         System.out.println();
         System.out.println(MESSAGE_INFORM_COMPLETE);
+    }
+
+    public void printError(String errorMessage) {
+        System.out.printf(FORMAT_INFORM_ERROR, errorMessage);
     }
 }
