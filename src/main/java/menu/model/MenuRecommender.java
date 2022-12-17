@@ -2,7 +2,6 @@ package menu.model;
 
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,12 +16,14 @@ public class MenuRecommender {
     public static final int DAY_SIZE = 5;
 
     private final List<Coach> coaches;
-    // TODO 출력할 때 String 변환 필요
     private final Map<Coach, List<String>> coachMenus = new LinkedHashMap<>();
+    private final List<Category> dailyCategories = new ArrayList<>();
 
     public MenuRecommender(List<String> names, List<List<String>> dislikeMenus) {
         this.coaches = makeCoaches(names, dislikeMenus);
         coaches.forEach(coach -> coachMenus.put(coach, new ArrayList<>()));
+        updateDailyCategories();
+        updateCoachMenus();
     }
 
     private List<Coach> makeCoaches(List<String> names, List<List<String>> dislikeMenus) {
@@ -53,21 +54,33 @@ public class MenuRecommender {
         }
     }
 
-    // TODO 출력할 때 String 변환 필요
-    public List<Category> makeDailyCategories() {
-        List<Category> dailyCategories = new ArrayList<>();
+    private void updateDailyCategories() {
         while (dailyCategories.size() < DAY_SIZE) {
             Category category = pickCategory();
             if (!dailyCategories.contains(category)) {
                 dailyCategories.add(category);
             }
         }
-        return dailyCategories;
     }
 
-    public Map<Coach, List<String>> makeCoachMenus(List<Category> dailyCategories) {
+    private void updateCoachMenus() {
+        // TODO IllegalState 예외처리
         dailyCategories.forEach(this::updateCoachMenusByCategory);
-        return Collections.unmodifiableMap(coachMenus);
+    }
+
+    public List<String> getDailyCategories() {
+        // TODO IllegalState 예외처리
+        return dailyCategories.stream()
+                .map(Category::getName)
+                .collect(Collectors.toList());
+    }
+
+    public Map<String, List<String>> getCoachMenus() {
+        // TODO IllegalState 예외처리
+        Map<String, List<String>> result = coachMenus.keySet()
+                .stream()
+                .collect(Collectors.toMap(Coach::getName, coachMenus::get));
+        return new LinkedHashMap<>(result);
     }
 
     private void updateCoachMenusByCategory(Category category) {

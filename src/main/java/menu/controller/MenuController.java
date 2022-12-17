@@ -1,9 +1,9 @@
 package menu.controller;
 
 import java.util.List;
+import java.util.Map;
 import menu.controller.util.ExceptionHandler;
 import menu.model.MenuRecommender;
-import menu.model.domain.Category;
 import menu.view.MenuView;
 
 public class MenuController {
@@ -13,15 +13,19 @@ public class MenuController {
     public void run() {
         menuView.printInformStart();
         ExceptionHandler.retryForIllegalArgument(this::initializeCoaches, menuView::printError);
-        initializeCoaches();
-        // TODO 추천 정보 생성
+        recommend();
     }
 
     private void initializeCoaches() {
         List<String> coachNames = menuView.inputCoachNames();
         List<List<String>> dislikeMenus = menuView.inputDisLikeMenus(coachNames);
         menuRecommender = new MenuRecommender(coachNames, dislikeMenus);
-        List<Category> categories = menuRecommender.makeDailyCategories();
-        menuRecommender.makeCoachMenus(categories);
+    }
+
+    private void recommend() {
+        List<String> dailyCategories = menuRecommender.getDailyCategories();
+        Map<String, List<String>> coachMenus = menuRecommender.getCoachMenus();
+        System.out.println(coachMenus);
+        menuView.printResult(dailyCategories, coachMenus);
     }
 }
