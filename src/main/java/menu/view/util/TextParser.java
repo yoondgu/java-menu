@@ -11,19 +11,31 @@ public class TextParser {
     private TextParser() {
     }
 
-    public static List<String> parseFormattedLine(String readLine) {
+    public static List<String> parseNotEmptyLine(String readLine) {
         String[] inputValues = readLine.split(DELIMITER);
         List<String> parsedValues = Arrays.stream(inputValues)
                 .map(String::trim)
                 .collect(Collectors.toList());
+        validateEmpty(parsedValues);
         validateValues(parsedValues);
         return parsedValues;
     }
 
-    private static void validateValues(List<String> values) {
+    public static List<String> parseCouldEmptyLine(String readLine) {
+        String[] inputValues = readLine.split(DELIMITER);
+        List<String> parsedValues = Arrays.stream(inputValues)
+                .map(String::trim)
+                .collect(Collectors.toList());
+        return parsedValues;
+    }
+
+    private static void validateEmpty(List<String> values) {
         if (values.isEmpty()) {
             throw new IllegalArgumentException(ERROR_INVALID_FORMAT);
         }
+    }
+
+    private static void validateValues(List<String> values) {
         values.forEach(TextParser::validateValue);
     }
 

@@ -9,6 +9,7 @@ public class MenuController {
     public void run() {
         menuView.printInformStart();
         List<String> coachNames = menuView.inputCoachNames();
-        System.out.println(coachNames);
+        List<List<String>> dislikeMenus = menuView.inputDisLikeMenus(coachNames);
+        System.out.println(dislikeMenus);
     }
 }
