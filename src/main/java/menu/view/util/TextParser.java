@@ -1,5 +1,6 @@
 package menu.view.util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +27,15 @@ public class TextParser {
         List<String> parsedValues = Arrays.stream(inputValues)
                 .map(String::trim)
                 .collect(Collectors.toList());
-        return parsedValues;
+        return checkContainsOnlyEmpty(parsedValues);
+    }
+
+
+    private static List<String> checkContainsOnlyEmpty(List<String> values) {
+        if (values.size() == 1 && values.get(0).isEmpty()) {
+            return new ArrayList<>();
+        }
+        return values;
     }
 
     private static void validateEmpty(List<String> values) {
