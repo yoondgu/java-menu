@@ -54,8 +54,8 @@ public class Coach {
         return name;
     }
 
-    public List<String> getDislikeMenus() {
-        return dislikeMenus;
+    public boolean dislike(String menu) {
+        return dislikeMenus.contains(menu);
     }
 
     @Override

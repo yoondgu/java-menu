@@ -61,7 +61,7 @@ public class MenuRecommender {
     private void pickMenusForCoach(Category category, Coach coach) {
         List<String> currentMenus = coachMenus.get(coach);
         String menu = category.getRandomMenu();
-        if (currentMenus.contains(menu)) {
+        if (currentMenus.contains(menu) || coach.dislike(menu)) {
             pickMenusForCoach(category, coach);
             return;
         }
