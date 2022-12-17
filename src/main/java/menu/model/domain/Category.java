@@ -36,6 +36,12 @@ public enum Category {
                 });
     }
 
+    public static boolean isExistMenu(String menuName) {
+        return Arrays.stream(values())
+                .map(category -> category.menus)
+                .anyMatch(menus -> menus.contains(menuName));
+    }
+
     public String getRandomMenu() {
         return Randoms.shuffle(menus).get(0);
     }
