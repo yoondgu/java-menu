@@ -15,6 +15,10 @@ public class MenuController {
 //        List<String> dailyCategories = new ArrayList<>(List.of("aa, aa, aa"));
 //        Map<String, List<String>> coachMenus = new LinkedHashMap<>(Map.of("bb", List.of("김", "밥")));
 //        menuView.printResult(dailyCategories, coachMenus);
+//        System.out.println(Category.takeRandomCategory(1));
+//        System.out.println(Category.ASIAN.getRandomMenu());
+//        System.out.println(Category.ASIAN.getRandomMenu());
+//        System.out.println(Category.ASIAN.getRandomMenu());
     }
 
     // TODO 코치 정보 반환하도록 반환값 타입 변경, 코드 추가
