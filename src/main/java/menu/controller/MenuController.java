@@ -3,6 +3,7 @@ package menu.controller;
 import java.util.List;
 import menu.controller.util.ExceptionHandler;
 import menu.model.MenuRecommender;
+import menu.model.domain.Category;
 import menu.view.MenuView;
 
 public class MenuController {
@@ -20,5 +21,7 @@ public class MenuController {
         List<String> coachNames = menuView.inputCoachNames();
         List<List<String>> dislikeMenus = menuView.inputDisLikeMenus(coachNames);
         menuRecommender = new MenuRecommender(coachNames, dislikeMenus);
+        List<Category> categories = menuRecommender.makeDailyCategories();
+        menuRecommender.makeCoachMenus(categories);
     }
 }

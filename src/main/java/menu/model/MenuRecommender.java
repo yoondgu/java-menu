@@ -2,7 +2,10 @@ package menu.model;
 
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import menu.model.domain.Category;
@@ -14,9 +17,12 @@ public class MenuRecommender {
     public static final int DAY_SIZE = 5;
 
     private final List<Coach> coaches;
+    // TODO 출력할 때 String 변환 필요
+    private final Map<Coach, List<String>> coachMenus = new LinkedHashMap<>();
 
     public MenuRecommender(List<String> names, List<List<String>> dislikeMenus) {
         this.coaches = makeCoaches(names, dislikeMenus);
+        coaches.forEach(coach -> coachMenus.put(coach, new ArrayList<>()));
     }
 
     private List<Coach> makeCoaches(List<String> names, List<List<String>> dislikeMenus) {
@@ -26,6 +32,7 @@ public class MenuRecommender {
                 .collect(Collectors.toList());
     }
 
+    // TODO validate 클래스 분리
     private void validate(List<String> name) {
         validateNameSize(name);
         validateDuplicatedName(name);
@@ -58,6 +65,26 @@ public class MenuRecommender {
         return dailyCategories;
     }
 
+    public Map<Coach, List<String>> makeCoachMenus(List<Category> dailyCategories) {
+        dailyCategories.forEach(this::updateCoachMenusByCategory);
+        return Collections.unmodifiableMap(coachMenus);
+    }
+
+    private void updateCoachMenusByCategory(Category category) {
+        coaches.forEach(coach -> pickMenusForCoach(category, coach));
+    }
+
+    private void pickMenusForCoach(Category category, Coach coach) {
+        List<String> currentMenus = coachMenus.get(coach);
+        String menu = category.getRandomMenu();
+        if (currentMenus.contains(menu)) {
+            pickMenusForCoach(category, coach);
+            return;
+        }
+        currentMenus.add(menu);
+        coachMenus.put(coach, currentMenus);
+    }
+
     private Category pickCategory() {
         return Category.takeRandomCategory(generateRandomValue());
     }
@@ -65,5 +92,4 @@ public class MenuRecommender {
     private int generateRandomValue() {
         return Randoms.pickNumberInRange(1, 5);
     }
-    // TODO 코치 별로 특정 카테고리의 메뉴 5개 저장
 }
