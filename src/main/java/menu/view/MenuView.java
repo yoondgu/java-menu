@@ -1,8 +1,14 @@
 package menu.view;
 
+import camp.nextstep.edu.missionutils.Console;
+import java.util.List;
+import menu.view.util.TextParser;
+
 public class MenuView {
-    public static final String INFORM_START = "점심 메뉴 추천을 시작합니다.";
-//    코치의 이름을 입력해 주세요. (, 로 구분)
+    public static final String MESSAGE_INFORM_START = "점심 메뉴 추천을 시작합니다.";
+    public static final String MESSAGE_INPUT_COACHES = "코치의 이름을 입력해 주세요. (, 로 구분)";
+
+    public static final String FORMAT_INPUT_WORDS = "^((\\S+)\\,(\\S+)\\,(\\S+))$";
 //    토미,제임스,포코
 //
 //    토미(이)가 못 먹는 메뉴를 입력해 주세요.
@@ -24,6 +30,12 @@ public class MenuView {
 //    추천을 완료했습니다.
 
     public void printInformStart() {
-        System.out.println(INFORM_START);
+        System.out.println(MESSAGE_INFORM_START);
+    }
+
+    public List<String> inputCoachNames() {
+        System.out.println(MESSAGE_INPUT_COACHES);
+        String line = Console.readLine();
+        return TextParser.parseFormattedLine(line);
     }
 }
