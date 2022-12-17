@@ -1,6 +1,5 @@
 package menu.model.domain;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -11,37 +10,36 @@ public class Coaches {
 
     private final List<Coach> coaches;
 
-    public Coaches(List<String> names, List<List<String>> disLikeMenus) {
-        this.coaches = makeCoaches(names, disLikeMenus);
-        updateDisLikeMenus(disLikeMenus);
+    public Coaches(List<String> names) {
+        this.coaches = makeCoaches(names);
     }
 
     public List<Coach> coaches() {
-        return Collections.unmodifiableList(coaches);
+        return coaches;
     }
 
-    private List<Coach> makeCoaches(List<String> names, List<List<String>> dislikeMenus) {
-        validateMatchingMenus(names.size(), dislikeMenus.size());
+    public List<String> getNames() {
+        return coaches.stream()
+                .map(coach -> coach.getName())
+                .collect(Collectors.toList());
+    }
+
+    private List<Coach> makeCoaches(List<String> names) {
         validateNames(names);
         return IntStream.range(0, names.size())
                 .mapToObj(index -> new Coach(names.get(index)))
                 .collect(Collectors.toList());
     }
 
-    private void updateDisLikeMenus(List<List<String>> disLikeMenus) {
+    public void updateDisLikeMenus(List<DislikeMenus> dislikeMenusByCoach) {
+        System.out.println(dislikeMenusByCoach);
         IntStream.range(0, coaches.size())
-                .forEach(index -> coaches.get(index).addDisLikeMenus(disLikeMenus.get(index)));
+                .forEach(index -> coaches.get(index).updateDislikeMenus(dislikeMenusByCoach.get(index)));
     }
 
     private void validateNames(List<String> names) {
         validateNameSize(names);
         validateDuplicatedName(names);
-    }
-
-    private void validateMatchingMenus(int namesSize, int menusSize) {
-        if (namesSize != menusSize) {
-            throw new IllegalArgumentException("코치 이름 수와 못 먹는 메뉴 목록의 수가 일치하지 않습니다.");
-        }
     }
 
     private void validateNameSize(List<String> names) {

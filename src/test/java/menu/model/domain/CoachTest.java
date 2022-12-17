@@ -19,19 +19,19 @@ class CoachTest {
 
     @Test
     void 코치_정보_저장_메뉴이름_예외테스트() {
-        assertThatThrownBy(() -> coach.addDisLikeMenus(List.of("김밥", "엽떡")))
+        assertThatThrownBy(() -> coach.updateDislikeMenus(new DislikeMenus(List.of("김밥", "엽떡"))))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void 코치_정보_저장_메뉴이름_중복_예외테스트() {
-        assertThatThrownBy(() -> coach.addDisLikeMenus(List.of("김밥", "김밥")))
+        assertThatThrownBy(() -> coach.updateDislikeMenus(new DislikeMenus(List.of("김밥", "김밥"))))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void 코치_정보_저장_메뉴이름_개수_예외테스트() {
-        assertThatThrownBy(() -> coach.addDisLikeMenus(List.of("김밥", "떡볶이", "스파게티")))
+        assertThatThrownBy(() -> coach.updateDislikeMenus(new DislikeMenus(List.of("김밥", "떡볶이", "스파게티"))))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
