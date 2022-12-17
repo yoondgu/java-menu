@@ -12,7 +12,6 @@ public class MenuController {
     public void run() {
         menuView.printInformStart();
         ExceptionHandler.retryForIllegalArgument(this::initializeCoaches, menuView::printError);
-        // TODO 코치 정보 생성
         initializeCoaches();
         // TODO 추천 정보 생성
     }

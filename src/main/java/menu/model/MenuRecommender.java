@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import menu.model.domain.Category;
 import menu.model.domain.Coach;
 
 public class MenuRecommender {
     public static final int COACHES_SIZE_MIN = 2;
     public static final int COACHES_SIZE_MAX = 5;
+    public static final int DAY_SIZE = 5;
 
     private final List<Coach> coaches;
 
@@ -44,10 +46,20 @@ public class MenuRecommender {
         }
     }
 
-    // TODO 카테고리 랜덤으로 5개 저장
-    public List<String> makeDailyCategories() {
-        List<String> dailyCategories = new ArrayList<>();
-        return null;
+    // TODO 출력할 때 String 변환 필요
+    public List<Category> makeDailyCategories() {
+        List<Category> dailyCategories = new ArrayList<>();
+        while (dailyCategories.size() < DAY_SIZE) {
+            Category category = pickCategory();
+            if (!dailyCategories.contains(category)) {
+                dailyCategories.add(category);
+            }
+        }
+        return dailyCategories;
+    }
+
+    private Category pickCategory() {
+        return Category.takeRandomCategory(generateRandomValue());
     }
 
     private int generateRandomValue() {
