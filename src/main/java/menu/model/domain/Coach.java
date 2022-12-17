@@ -1,5 +1,6 @@
 package menu.model.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Coach {
@@ -8,14 +9,11 @@ public class Coach {
     public static final int MENU_SIZE_MAX = 2;
 
     private final String name;
-    private final List<String> dislikeMenus;
+    private final List<String> dislikeMenus = new ArrayList<>();
 
-    public Coach(String name, List<String> dislikeMenus) {
+    public Coach(String name) {
         validateName(name);
-        validateMenus(dislikeMenus);
-        validateDuplicatedMenu(dislikeMenus);
         this.name = name;
-        this.dislikeMenus = dislikeMenus;
     }
 
     private void validateName(String name) {
@@ -24,10 +22,16 @@ public class Coach {
         }
     }
 
+    public void addDisLikeMenus(List<String> menus) {
+        validateMenus(menus);
+        dislikeMenus.addAll(menus);
+    }
+
     private void validateMenus(List<String> menus) {
         if (menus.size() > MENU_SIZE_MAX) {
             throw new IllegalArgumentException("못 먹는 메뉴 개수는 최대 2여야 합니다.");
         }
+        validateDuplicatedMenu(menus);
         menus.forEach(this::validateMenuName);
     }
 

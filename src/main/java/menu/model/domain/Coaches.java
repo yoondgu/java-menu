@@ -13,6 +13,7 @@ public class Coaches {
 
     public Coaches(List<String> names, List<List<String>> disLikeMenus) {
         this.coaches = makeCoaches(names, disLikeMenus);
+        updateDisLikeMenus(disLikeMenus);
     }
 
     public List<Coach> coaches() {
@@ -23,8 +24,13 @@ public class Coaches {
         validateMatchingMenus(names.size(), dislikeMenus.size());
         validateNames(names);
         return IntStream.range(0, names.size())
-                .mapToObj(index -> new Coach(names.get(index), dislikeMenus.get(index)))
+                .mapToObj(index -> new Coach(names.get(index)))
                 .collect(Collectors.toList());
+    }
+
+    private void updateDisLikeMenus(List<List<String>> disLikeMenus) {
+        IntStream.range(0, coaches.size())
+                .forEach(index -> coaches.get(index).addDisLikeMenus(disLikeMenus.get(index)));
     }
 
     private void validateNames(List<String> names) {
