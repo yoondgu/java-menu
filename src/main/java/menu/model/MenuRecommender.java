@@ -20,6 +20,10 @@ public class MenuRecommender {
 
     public MenuRecommender(Coaches coaches) {
         this.coaches = coaches;
+        initialize();
+    }
+
+    private void initialize() {
         coaches.coaches()
                 .forEach(coach -> coachMenus.put(coach, new ArrayList<>()));
         updateDailyCategories();
@@ -43,19 +47,19 @@ public class MenuRecommender {
     }
 
     public List<String> getDailyCategories() {
-        // TODO IllegalState 예외처리
+        validateDailyCategories();
         return dailyCategories.stream()
                 .map(Category::getName)
                 .collect(Collectors.toList());
     }
 
     private void updateCoachMenus() {
-        // TODO IllegalState 예외처리
+        validateDailyCategories();
         dailyCategories.forEach(this::updateCoachMenusByCategory);
     }
 
     public Map<String, List<String>> getCoachMenus() {
-        // TODO IllegalState 예외처리
+        validateCoachMenusState();
         Map<String, List<String>> result = coachMenus.keySet()
                 .stream()
                 .collect(Collectors.toMap(Coach::getName, coachMenus::get));
@@ -76,5 +80,17 @@ public class MenuRecommender {
         }
         currentMenus.add(menu);
         coachMenus.put(coach, currentMenus);
+    }
+
+    private void validateDailyCategories() {
+        if (dailyCategories.isEmpty()) {
+            throw new IllegalStateException("요일 별 추천 카테고리 정보가 생성되지 않은 상태입니다.");
+        }
+    }
+
+    private void validateCoachMenusState() {
+        if (coachMenus.isEmpty()) {
+            throw new IllegalStateException("코치 별 추천 메뉴 정보가 생성되지 않은 상태입니다.");
+        }
     }
 }
