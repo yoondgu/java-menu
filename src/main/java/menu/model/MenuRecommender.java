@@ -29,7 +29,7 @@ public class MenuRecommender {
     private void updateDailyCategories() {
         while (dailyCategories.size() < DAY_SIZE) {
             Category category = MenuPicker.pickCategory();
-            if (isTwiceDuplicated(category)) {
+            if (!isTwiceDuplicated(category)) {
                 dailyCategories.add(category);
             }
         }
@@ -39,7 +39,7 @@ public class MenuRecommender {
         int foundCount = (int) dailyCategories.stream()
                 .filter(category -> Objects.equals(category, findCategory))
                 .count();
-        return !(foundCount == DAILY_CATEGORY_MAX);
+        return foundCount == DAILY_CATEGORY_MAX;
     }
 
     public List<String> getDailyCategories() {
