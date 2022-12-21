@@ -3,8 +3,8 @@ package menu.model.domain;
 import java.util.ArrayList;
 
 public class Coach {
-    public static final int NAME_MAX = 4;
-    public static final int NAME_MIN = 2;
+    private static final int NAME_MAX = 4;
+    private static final int NAME_MIN = 2;
 
     private final String name;
     private DislikeMenus dislikeMenus = new DislikeMenus(new ArrayList<>());

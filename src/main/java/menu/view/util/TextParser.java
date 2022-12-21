@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TextParser {
-    public static final String DELIMITER = ",";
-    public static final String ERROR_INVALID_FORMAT = "잘못된 형식의 입력값입니다.";
+    private static final String DELIMITER = ",";
+    private static final String ERROR_INVALID_FORMAT = "잘못된 형식의 입력값입니다.";
 
     private TextParser() {
     }

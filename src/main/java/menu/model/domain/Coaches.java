@@ -6,8 +6,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Coaches {
-    public static final int COACHES_SIZE_MIN = 2;
-    public static final int COACHES_SIZE_MAX = 5;
+    private static final int COACHES_SIZE_MIN = 2;
+    private static final int COACHES_SIZE_MAX = 5;
 
     private final List<Coach> coaches;
 

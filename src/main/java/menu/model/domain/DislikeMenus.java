@@ -3,7 +3,7 @@ package menu.model.domain;
 import java.util.List;
 
 public class DislikeMenus {
-    public static final int MENU_SIZE_MAX = 2;
+    private static final int MENU_SIZE_MAX = 2;
 
     private final List<String> dislikeMenu;
 

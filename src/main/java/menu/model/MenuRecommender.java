@@ -11,8 +11,8 @@ import menu.model.domain.Coach;
 import menu.model.domain.Coaches;
 
 public class MenuRecommender {
-    public static final int DAY_SIZE = 5;
-    public static final int DAILY_CATEGORY_MAX = 2;
+    private static final int DAY_SIZE = 5;
+    private static final int DAILY_CATEGORY_MAX = 2;
 
     private final Coaches coaches;
     private final Map<Coach, List<String>> coachMenus = new LinkedHashMap<>();

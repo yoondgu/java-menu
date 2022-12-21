@@ -5,10 +5,10 @@ import java.util.Map;
 import menu.view.util.FormatMaker;
 
 public class OutputView {
-    public static final String MESSAGE_INFORM_START = "점심 메뉴 추천을 시작합니다.";
-    public static final String MESSAGE_INFORM_RESULT = "메뉴 추천 결과입니다.";
-    public static final String MESSAGE_INFORM_COMPLETE = "추천을 완료했습니다.";
-    public static final String FORMAT_INFORM_ERROR = "[ERROR] %s" + System.lineSeparator();
+    private static final String MESSAGE_INFORM_START = "점심 메뉴 추천을 시작합니다.";
+    private static final String MESSAGE_INFORM_RESULT = "메뉴 추천 결과입니다.";
+    private static final String MESSAGE_INFORM_COMPLETE = "추천을 완료했습니다.";
+    private static final String FORMAT_INFORM_ERROR = "[ERROR] %s" + System.lineSeparator();
 
     public void printInformStart() {
         System.out.println(MESSAGE_INFORM_START);
