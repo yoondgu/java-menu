@@ -1,5 +1,6 @@
 package menu.model.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
@@ -33,5 +34,13 @@ class CoachTest {
     void 코치_정보_저장_메뉴이름_개수_예외테스트() {
         assertThatThrownBy(() -> coach.updateDislikeMenus(new DislikeMenus(List.of("김밥", "떡볶이", "스파게티"))))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 코치_못먹는메뉴_확인테스트() {
+        coach.updateDislikeMenus(new DislikeMenus(List.of("김밥", "떡볶이")));
+
+        assertThat(coach.dislike("김밥")).isTrue();
+        assertThat(coach.dislike("라자냐")).isFalse();
     }
 }
