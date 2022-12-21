@@ -17,11 +17,15 @@ public class DislikeMenus {
     }
 
     private void validateMenus(List<String> menus) {
+        validateMenusSize(menus);
+        validateDuplicatedMenu(menus);
+        menus.forEach(this::validateMenuName);
+    }
+
+    private void validateMenusSize(List<String> menus) {
         if (menus.size() > MENU_SIZE_MAX) {
             throw new IllegalArgumentException("못 먹는 메뉴 개수는 최대 2여야 합니다.");
         }
-        validateDuplicatedMenu(menus);
-        menus.forEach(this::validateMenuName);
     }
 
     private void validateDuplicatedMenu(List<String> menus) {
