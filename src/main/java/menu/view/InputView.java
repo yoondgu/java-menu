@@ -14,12 +14,6 @@ public class InputView {
         return TextParser.parseNotEmptyLine(Console.readLine());
     }
 
-//    public List<List<String>> inputDisLikeMenus(List<String> coachNames) {
-//        return coachNames.stream()
-//                .map(this::inputDisLikeMenu)
-//                .collect(Collectors.toList());
-//    }
-
     public List<String> inputDisLikeMenu(String coachName) {
         System.out.println();
         System.out.printf(FORMAT_INPUT_DISLIKE_MENU, coachName);
