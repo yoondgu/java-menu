@@ -2,7 +2,6 @@ package menu.view;
 
 import camp.nextstep.edu.missionutils.Console;
 import java.util.List;
-import java.util.stream.Collectors;
 import menu.view.util.TextParser;
 
 public class InputView {
@@ -15,13 +14,13 @@ public class InputView {
         return TextParser.parseNotEmptyLine(Console.readLine());
     }
 
-    public List<List<String>> inputDisLikeMenus(List<String> coachNames) {
-        return coachNames.stream()
-                .map(this::inputDisLikeMenu)
-                .collect(Collectors.toList());
-    }
+//    public List<List<String>> inputDisLikeMenus(List<String> coachNames) {
+//        return coachNames.stream()
+//                .map(this::inputDisLikeMenu)
+//                .collect(Collectors.toList());
+//    }
 
-    private List<String> inputDisLikeMenu(String coachName) {
+    public List<String> inputDisLikeMenu(String coachName) {
         System.out.println();
         System.out.printf(FORMAT_INPUT_DISLIKE_MENU, coachName);
         return TextParser.parseCouldEmptyLine(Console.readLine());

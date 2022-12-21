@@ -2,7 +2,6 @@ package menu.controller;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import menu.controller.util.ExceptionHandler;
 import menu.model.MenuRecommender;
 import menu.model.domain.Coaches;
@@ -18,7 +17,7 @@ public class MenuController {
     public void run() {
         outputView.printInformStart();
         ExceptionHandler.retryForIllegalArgument(this::askCoachNames, outputView::printError);
-        ExceptionHandler.retryForIllegalArgument(this::askDislikeMenus, outputView::printError);
+        coaches.getNames().forEach(this::saveDislikeMenusByCoach);
         recommend();
     }
 
@@ -27,12 +26,11 @@ public class MenuController {
         coaches = new Coaches(coachNames);
     }
 
-    private void askDislikeMenus() {
-        List<List<String>> dislikeMenusByCoach = inputView.inputDisLikeMenus(coaches.getNames());
-        List<DislikeMenus> dislikeMenus = dislikeMenusByCoach.stream()
-                .map(DislikeMenus::new)
-                .collect(Collectors.toList());
-        coaches.updateDisLikeMenus(dislikeMenus);
+    private void saveDislikeMenusByCoach(String coachName) {
+        DislikeMenus dislikeMenus = ExceptionHandler.retryForIllegalArgument(DislikeMenus::new,
+                () -> inputView.inputDisLikeMenu(coachName),
+                outputView::printError);
+        coaches.updateDislikeMenusByCoach(coachName, dislikeMenus);
     }
 
     private void recommend() {

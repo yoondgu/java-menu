@@ -2,8 +2,8 @@ package menu.model.domain;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Coaches {
     public static final int COACHES_SIZE_MIN = 2;
@@ -32,10 +32,16 @@ public class Coaches {
                 .collect(Collectors.toList());
     }
 
-    public void updateDisLikeMenus(List<DislikeMenus> dislikeMenusByCoach) {
-        validateDislikeMenusSize(dislikeMenusByCoach);
-        IntStream.range(0, coaches.size())
-                .forEach(index -> coaches.get(index).updateDislikeMenus(dislikeMenusByCoach.get(index)));
+    private Coach findCoachByName(String name) {
+        return coaches.stream()
+                .filter(coach -> Objects.equals(coach.getName(), name))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 이름을 가진 코치가 존재하지 않습니다."));
+    }
+
+    public void updateDislikeMenusByCoach(String coachName, DislikeMenus dislikeMenus) {
+        Coach coach = findCoachByName(coachName);
+        coach.updateDislikeMenus(dislikeMenus);
     }
 
     private void validateNames(List<String> names) {
@@ -55,12 +61,6 @@ public class Coaches {
                 .count();
         if (removeDuplicated != names.size()) {
             throw new IllegalArgumentException("중복된 코치 이름을 입력할 수 없습니다.");
-        }
-    }
-
-    private void validateDislikeMenusSize(List<DislikeMenus> menus) {
-        if (coaches.size() != menus.size()) {
-            throw new IllegalArgumentException("코치의 인원 수와 못 먹는 메뉴 정보 수가 일치하지 않습니다.");
         }
     }
 }
