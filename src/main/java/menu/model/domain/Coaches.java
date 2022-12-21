@@ -20,19 +20,19 @@ public class Coaches {
 
     public List<String> getNames() {
         return coaches.stream()
-                .map(coach -> coach.getName())
+                .map(Coach::getName)
                 .collect(Collectors.toList());
     }
 
     private List<Coach> makeCoaches(List<String> names) {
         validateNames(names);
-        return IntStream.range(0, names.size())
-                .mapToObj(index -> new Coach(names.get(index)))
+        return names.stream()
+                .map(Coach::new)
                 .collect(Collectors.toList());
     }
 
     public void updateDisLikeMenus(List<DislikeMenus> dislikeMenusByCoach) {
-        System.out.println(dislikeMenusByCoach);
+        validateDislikeMenusSize(dislikeMenusByCoach);
         IntStream.range(0, coaches.size())
                 .forEach(index -> coaches.get(index).updateDislikeMenus(dislikeMenusByCoach.get(index)));
     }
@@ -54,6 +54,12 @@ public class Coaches {
                 .count();
         if (removeDuplicated != names.size()) {
             throw new IllegalArgumentException("중복된 코치 이름을 입력할 수 없습니다.");
+        }
+    }
+
+    private void validateDislikeMenusSize(List<DislikeMenus> menus) {
+        if (coaches.size() != menus.size()) {
+            throw new IllegalArgumentException("코치의 인원 수와 못 먹는 메뉴 정보 수가 일치하지 않습니다.");
         }
     }
 }
