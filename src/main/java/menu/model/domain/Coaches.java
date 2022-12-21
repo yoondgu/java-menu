@@ -1,5 +1,6 @@
 package menu.model.domain;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -15,7 +16,7 @@ public class Coaches {
     }
 
     public List<Coach> coaches() {
-        return coaches;
+        return Collections.unmodifiableList(coaches);
     }
 
     public List<String> getNames() {
