@@ -70,7 +70,7 @@ public class MenuRecommender {
     private void pickMenusForCoach(Category category, Coach coach) {
         List<String> currentMenus = coachMenus.get(coach);
         String menu = category.getRandomMenu();
-        if (menu == null || currentMenus.contains(menu) || coach.dislike(menu)) {
+        if (currentMenus.contains(menu) || coach.dislike(menu)) {
             pickMenusForCoach(category, coach);
             return;
         }

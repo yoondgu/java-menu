@@ -21,7 +21,7 @@ public class Coach {
     }
 
     public void updateDislikeMenus(DislikeMenus menus) {
-        dislikeMenus = dislikeMenus;
+        dislikeMenus = menus;
     }
 
     public String getName() {
@@ -30,13 +30,5 @@ public class Coach {
 
     public boolean dislike(String menu) {
         return dislikeMenus.contains(menu);
-    }
-
-    @Override
-    public String toString() {
-        return "Coach{" +
-                "name='" + name + '\'' +
-                ", dislikeMenus=" + dislikeMenus +
-                '}';
     }
 }
