@@ -11,14 +11,13 @@ import menu.view.MenuView;
 
 public class MenuController {
     private final MenuView menuView = new MenuView();
-    private MenuRecommender menuRecommender;
     private Coaches coaches;
 
     public void run() {
         menuView.printInformStart();
         ExceptionHandler.retryForIllegalArgument(this::askCoachNames, menuView::printError);
         ExceptionHandler.retryForIllegalArgument(this::askDislikeMenus, menuView::printError);
-        recommend(coaches);
+        recommend();
     }
 
     private void askCoachNames() {
@@ -34,9 +33,8 @@ public class MenuController {
         coaches.updateDisLikeMenus(dislikeMenus);
     }
 
-
-    private void recommend(Coaches coaches) {
-        menuRecommender = new MenuRecommender(coaches);
+    private void recommend() {
+        MenuRecommender menuRecommender = new MenuRecommender(coaches);
         List<String> dailyCategories = menuRecommender.getDailyCategories();
         Map<String, List<String>> coachMenus = menuRecommender.getCoachMenus();
         menuView.printResult(dailyCategories, coachMenus);

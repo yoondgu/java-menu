@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import menu.model.domain.Category;
 import menu.model.domain.Coach;
@@ -11,6 +12,7 @@ import menu.model.domain.Coaches;
 
 public class MenuRecommender {
     public static final int DAY_SIZE = 5;
+    public static final int DAILY_CATEGORY_MAX = 2;
 
     private final Coaches coaches;
     private final Map<Coach, List<String>> coachMenus = new LinkedHashMap<>();
@@ -27,10 +29,17 @@ public class MenuRecommender {
     private void updateDailyCategories() {
         while (dailyCategories.size() < DAY_SIZE) {
             Category category = MenuPicker.pickCategory();
-            if (!dailyCategories.contains(category)) {
+            if (isTwiceDuplicated(category)) {
                 dailyCategories.add(category);
             }
         }
+    }
+
+    private boolean isTwiceDuplicated(Category findCategory) {
+        int foundCount = (int) dailyCategories.stream()
+                .filter(category -> Objects.equals(category, findCategory))
+                .count();
+        return !(foundCount == DAILY_CATEGORY_MAX);
     }
 
     public List<String> getDailyCategories() {

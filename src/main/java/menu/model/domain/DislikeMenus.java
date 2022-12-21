@@ -1,16 +1,15 @@
 package menu.model.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DislikeMenus {
     public static final int MENU_SIZE_MAX = 2;
 
-    private List<String> dislikeMenu = new ArrayList<>();
+    private final List<String> dislikeMenu;
 
     public DislikeMenus(List<String> menus) {
         validateMenus(menus);
-        this.dislikeMenu = dislikeMenu;
+        this.dislikeMenu = menus;
     }
 
     public boolean contains(String menu) {
